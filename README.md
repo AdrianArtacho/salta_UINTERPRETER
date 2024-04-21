@@ -1,29 +1,23 @@
-# README #
+# README 
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This repo takes the output of the UI in github and extrats the peaks (after some smoothing)
 
-### What is this repository for? ###
+---
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+## USAGE
 
-### How do I get set up? ###
+0. Type the path to the data file in the script...
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+1. Put the data file somewhere in `INPUT/``
 
-### Contribution guidelines ###
+2. Simply runthe main script:
 
-* Writing tests
-* Code review
-* Other guidelines
+```shell
+python INTERPRET.py
+```
 
-### Who do I talk to? ###
+3. The result will be stored as `result.csv` in the folder where the data came from.
 
-* Repo owner or admin
-* Other community or team contact
+---
+
+## INSTALL

@@ -48,3 +48,13 @@ Thumbs.db
 *.mov
 *.wmv
 
+# VENV
+.venv
+
+#Structural files
+
+INPUT/*
+!INPUT/.gitkeep
+
+OUTPUT/*
+!OUTPUT/.gitkeep
