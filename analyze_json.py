@@ -22,9 +22,9 @@ def output_folder_path(file_path, output_folder='OUTPUT/',verbose=False):
     output_path = output_folder+name_string+'/'+name_string
     if verbose:
         print("output_path:", output_path)
-    return output_path
+    return output_path 
 
-def main(json_path):
+def main(json_path, scaledValues=False):
     # Output folder path
     output_path = output_folder_path(json_path)
 
@@ -33,7 +33,7 @@ def main(json_path):
         data = json.load(f)
     
     # Create a dataframe to hold the analysis results
-    analysis = {'subkey': [], 'num_values': [], 'min_value': [], 'max_value': []}
+    analysis = {'key': [], 'subkey': [], 'num_values': [], 'min_value': [], 'max_value': []}
     
     # Extract data from the 'data' and 'scaledData' keys
     # for key in ['data', 'scaledData']:
@@ -44,12 +44,29 @@ def main(json_path):
                 min_value = min(values)
                 max_value = max(values)
                 
+                analysis['key'].append('data')
                 analysis['subkey'].append(subkey)
                 analysis['num_values'].append(num_values)
                 analysis['min_value'].append(min_value)
                 analysis['max_value'].append(max_value)
             else:
                 print(f"Skipping subkey '{subkey}' as it is not a list")
+
+    if scaledValues:
+        for key in ['scaledData']:
+            for subkey, values in data[key].items():
+                if isinstance(values, list):
+                    num_values = len(values)
+                    min_value = min(values)
+                    max_value = max(values)
+                    
+                    analysis['key'].append('scaledData')
+                    analysis['subkey'].append(subkey)
+                    analysis['num_values'].append(num_values)
+                    analysis['min_value'].append(min_value)
+                    analysis['max_value'].append(max_value)
+                else:
+                    print(f"Skipping subkey '{subkey}' as it is not a list")
     
     # Convert analysis dictionary to a dataframe
     df = pd.DataFrame(analysis)
