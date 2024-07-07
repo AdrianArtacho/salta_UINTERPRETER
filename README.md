@@ -10,7 +10,7 @@ This repo takes the output of the UI in github and extrats the peaks (after some
 
 1. Put the data file somewhere in `INPUT/``
 
-2. Simply runthe main script:
+2. Simply run the main script:
 
 ```shell
 python INTERPRET.py
@@ -21,3 +21,6 @@ python INTERPRET.py
 ---
 
 ## INSTALL
+
+Create a `venv`, install all dependencies...
+
