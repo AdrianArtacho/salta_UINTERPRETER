@@ -8,8 +8,29 @@ import csv
 import pyt.paths.parse_path as parse_path
 import pyt.paths.create_folder as create_folder
 
+def output_folder_path(file_path, output_path, verbose=False):
+    # Extract the directory part of the path
+    folder_path = os.path.dirname(file_path)
+    if verbose:
+        print(folder_path)
 
-def main(file_path, sigma=2, output_path='OUTPUT/', verbose=True):
+    # exit()
+    name_string, ext_string = parse_path.main(file_path, verbose=False)
+
+    if verbose:
+        print("name_string:",name_string, "ext_string:", ext_string)
+    
+    create_folder.main(name_string, local_folder = 'OUTPUT')
+    output_folder_path = output_path+name_string+'/'+name_string
+    return output_folder_path
+
+def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
+    # Output_folder_path
+    save_filepath = output_folder_path(file_path, output_path, verbose=verbose)
+    if verbose:
+        print("save_path:", save_filepath)
+    # exit()
+
     # Load the JSON data from the file
     with open(file_path, 'r') as file:
         data = json.load(file)
@@ -51,37 +72,25 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=True):
     axes[2].set_ylabel('Value')
     axes[2].legend()
 
-    # Extract the directory part of the path
-    folder_path = os.path.dirname(file_path)
-    if verbose:
-        print(folder_path)
-
-    # exit()
-    name_string, ext_string = parse_path.main(file_path, verbose=False)
-
-    if verbose:
-        print("name_string:",name_string, "ext_string:", ext_string)
-    
-    create_folder.main(name_string, local_folder = 'OUTPUT')
-    output_folder_path = output_path+name_string
-
     # exit()
     plt.tight_layout()
-    plt.savefig(output_folder_path+'/'+name_string+'_graph.png')
+    plt.savefig(save_filepath+'_graph.png')
     plt.show()
 
     # Return the positions of the peaks
-    print(peaks)
-    print(type(peaks))
+    if verbose:
+        print(peaks)
+        print(type(peaks))
 
     # Specify the file path to save to
     # result_file_path = folder_path+'/result.csv'
-    result_file_path = output_folder_path+'/'+name_string+'_result.csv'
+    result_file_path = save_filepath+'_result.csv'
 
     # Save the array to a CSV file using numpy.savetxt
     np.savetxt(result_file_path, peaks, delimiter=',', fmt='%d')  # Use fmt='%d' for integers
-
-    print("Array has been saved to", result_file_path)
+    if verbose:
+        print("Array has been saved to", result_file_path)
+    
     return peaks
 
 # Example usage

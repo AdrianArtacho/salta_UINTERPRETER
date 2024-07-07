@@ -6,7 +6,7 @@ import os
 import pyt.paths.parse_path as parse_path
 import pyt.paths.create_folder as create_folder
 
-def output_folder_path(file_path, output_folder='OUTPUT/',verbose=True):
+def output_folder_path(file_path, output_folder='OUTPUT/',verbose=False):
     # Extract the directory part of the path
     folder_path = os.path.dirname(file_path)
     if verbose:
@@ -36,7 +36,8 @@ def main(json_path):
     analysis = {'subkey': [], 'num_values': [], 'min_value': [], 'max_value': []}
     
     # Extract data from the 'data' and 'scaledData' keys
-    for key in ['data', 'scaledData']:
+    # for key in ['data', 'scaledData']:
+    for key in ['data']:
         for subkey, values in data[key].items():
             if isinstance(values, list):
                 num_values = len(values)
