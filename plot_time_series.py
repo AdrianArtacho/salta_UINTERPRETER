@@ -91,7 +91,7 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
     if verbose:
         print("Array has been saved to", result_file_path)
     
-    return peaks
+    return peaks, result_file_path
 
 # Example usage
 # file_path = 'path_to_your_file.json'  # Replace this with the path to your JSON file
