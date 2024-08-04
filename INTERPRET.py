@@ -8,6 +8,8 @@ import pandas as pd
 import plot_timepoints
 import pyt.paths.parse_path as parse_path
 
+import pub_markdown
+
 verbose = True
 
 def create_and_save_dataframe(peaks_scaled, peaks_unscaled, peaks_timecode, peaks_m, peaks_s, output_file):
@@ -94,5 +96,9 @@ create_and_save_dataframe(peaks_scaled, peaks_unscaled, peaks_timecode, peaks_m,
 
 if verbose:
     print(peaks_unscaled)   # Miliseconds
+    print(stem_name)
+    print(x_range_seconds)
 plot_timepoints.main(peaks_unscaled, image_path, x_range=x_range_seconds, name=stem_name)
 analyze_json.main(json_path)
+
+#pub_markdown.main(youtube_url, timecodes, proj_name='exp15a')
