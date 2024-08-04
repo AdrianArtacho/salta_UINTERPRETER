@@ -4,3 +4,6 @@
 [submodule "pyt"]
 	path = pyt
 	url = https://AdrianArtacho@bitbucket.org/smoothspaces/pyt_abstractions.git
+[submodule "pub"]
+	path = pub
+	url = https://AdrianArtacho@bitbucket.org/smoothspaces/pub_interpret.git
