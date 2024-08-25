@@ -1,4 +1,4 @@
-import gui.gui_browse as gui_browse
+import gui.gui_browse_t as gui_browse
 import analyze_salta
 import pyt.time.parse_timecode as parse_timecode
 
@@ -12,23 +12,25 @@ import pyt.time.parse_timecode as parse_timecode
 #     return int(minutes), int(seconds), remaining_ms
 
 # Select the SALTA file that was fed to the APP
-def main(verbose=False):
+def main(verbose=True):
+    print('>>> Search for the original SALTA .csv file')
     filepath = gui_browse.main(params_title='Search for the original SALTA .csv file', 
             params_initbrowser='../featurestructure/OUTPUT',
             params_extensions='.csv',               # E.g. '.csv'
-            size=(40,20),
+            # size=(40,20),
             verbose=False)
     
     if verbose:
         print(filepath)
+    # exit()
+    x_range_across_features = analyze_salta.main(filepath, output_path='INTER/analysis.csv', verbose=verbose)
 
-    x_range_across_features = analyze_salta.main(filepath, output_path='INTER/analysis.csv')
-
+    # exit()
     if verbose:
         print("x_range_across_features:", x_range_across_features)
 
     minutes, seconds, remaining_ms = parse_timecode.main(x_range_across_features)
-
+    # exit()
     if verbose:
         print("The captured section is",str(minutes),'minutes', str(seconds)+"'"+str(remaining_ms), "seconds")
 

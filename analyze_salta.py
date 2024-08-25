@@ -16,9 +16,16 @@ def extract_and_check_range_x(summary_df, verbose=False):
         print("Warning: The values in 'range_x' are not the same across all rows.")
         # Optionally, you can print the individual values for debugging
         print(f"Range_x values found: {range_x_values}")
-        return None  # Or handle this case as per your requirement
+        max_value_found = max(range_x_values)
+        print("max_value_found:", max_value_found)
+        return max_value_found  # Or handle this case as per your requirement
 
-def main(input_path, output_path='check.csv', verbose=False):
+def main(input_path, output_path='INTER/check.csv', verbose=True):
+    # exit()
+    if verbose:
+         print(input_path)
+        #  exit()
+    # exit()
     # Load the CSV file
     df = pd.read_csv(input_path)
 
@@ -51,5 +58,7 @@ def main(input_path, output_path='check.csv', verbose=False):
 
 if __name__ == "__main__":
     # Example usage
-    input_file_path = 'OUTPUT/exp0b_SALTA/exp0b_SALTA.csv'
-    main(input_file_path)
+    # input_file_path = 'OUTPUT/exp0b_SALTA/exp0b_SALTA.csv'
+    input_file_path = '/Users/adrian/Documents/Dissertation/CODE/salta/featurestructure/OUTPUT/exp16a_mic-vs-imu-mpipe/exp16a_mic-vs-imu-mpipe.csv'
+    x_range_across_features = main(input_file_path)
+    print(x_range_across_features)

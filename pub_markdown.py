@@ -6,7 +6,7 @@ def timecode_to_seconds(timecode):
     total_seconds = int(minutes) * 60 + float(seconds)
     return int(total_seconds)
 
-def main(youtube_url, timecodes, proj_name='exp?'):
+def main(youtube_url, timecodes, proj_name='exp?', savefolder="pub/"):
     # Generate the markdown content
     markdown_content = "# "+proj_name+"\n\n"
     for i, timecode in enumerate(timecodes):
@@ -14,7 +14,7 @@ def main(youtube_url, timecodes, proj_name='exp?'):
         markdown_content += f"[transition #{i+1} ({timecode})]({youtube_url}&t={seconds}s)\n\n"
 
     # Save to markdown file
-    with open("pub/"+proj_name+"_transitions.md", "w") as file:
+    with open(savefolder+proj_name+".md", "w") as file:
         file.write(markdown_content)
 
     print("Markdown file generated successfully.")
