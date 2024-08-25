@@ -135,4 +135,4 @@ if generate_markdown:
     # youtube_url = "https://youtu.be/FXzPxJcDD-M" 
     # timecodes = ["3:04.23", "5:12.34", "7:45.67"]
     timecodes = formatted_time_list
-    pub_markdown.main(youtube_url, timecodes, proj_name=stem_name, savefolder="OUTPUT/"+stem_name)
+    pub_markdown.main(youtube_url, timecodes, proj_name=stem_name, savefolder="OUTPUT/"+stem_name+"/")
