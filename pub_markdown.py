@@ -6,7 +6,7 @@ def timecode_to_seconds(timecode):
     total_seconds = int(minutes) * 60 + float(seconds)
     return int(total_seconds)
 
-def main(youtube_url, timecodes, proj_name='exp?', savefolder="pub/"):
+def main(youtube_url, timecodes, proj_name='exp?', savefolder="pub/", carbon_copy=False):
 
     print("savefolder:", savefolder)
 
@@ -21,8 +21,9 @@ def main(youtube_url, timecodes, proj_name='exp?', savefolder="pub/"):
     with open(save_file_path, "w") as file:
         file.write(markdown_content)
 
-    with open('pub/'+proj_name+".md", "w") as file:
-        file.write(markdown_content)
+    if carbon_copy:
+        with open(savefolder+proj_name+".md", "w") as file:
+            file.write(markdown_content)
 
     print("Markdown file generated successfully at", save_file_path)
 

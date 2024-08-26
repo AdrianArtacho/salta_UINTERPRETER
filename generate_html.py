@@ -1,3 +1,5 @@
+import print_link
+
 def time_to_seconds(time_str):
     """Convert a time string 'mm:ss' or 'hh:mm:ss' to seconds."""
     parts = time_str.split(':')
@@ -9,8 +11,15 @@ def time_to_seconds(time_str):
     else:
         raise ValueError("Time format should be 'mm:ss' or 'hh:mm:ss'")
 
-def main(youtube_url, timepoints, video_duration, stem_name='Test', 
-         output_file="youtube_video_corrected_clickable_labels.html"):
+def main(youtube_url, timepoints, video_duration, 
+         stem_name='Test',
+         containing_folder='pub/',
+         htmltitle='YouTube Video with Padding'):
+        #  output_file="youtube_video_with_padding.html"
+        #  ):
+    
+    output_file=containing_folder+stem_name+".html"
+
     video_id = youtube_url.split("v=")[-1].split("&")[0]
     
     # Start building the HTML content
@@ -20,7 +29,7 @@ def main(youtube_url, timepoints, video_duration, stem_name='Test',
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>YouTube Video with Corrected Clickable Labeled Intervals</title>
+        <title>{stem_name}</title>
         <style>
             body {{
                 margin: 0;
@@ -99,7 +108,7 @@ def main(youtube_url, timepoints, video_duration, stem_name='Test',
     </head>
     <body>
         <div class="container">
-            <h1>YouTube Video with Corrected Clickable Labeled Intervals</h1>
+            <h1>{htmltitle}</h1>
             <div class="video-container">
                 <iframe id="youtubePlayer"
                         src="https://www.youtube.com/embed/{video_id}"
@@ -134,7 +143,7 @@ def main(youtube_url, timepoints, video_duration, stem_name='Test',
     if ticks_positions:
         first_tick_position, _ = ticks_positions[0]
         html_content += f"""
-        <div class="interval" style="left: 0%; width: calc({first_tick_position}% - 2px);"
+        <div class="interval" style="left: 0%; width: calc({first_tick_position}% - 4px);"
              onclick="document.getElementById('youtubePlayer').src='https://www.youtube.com/embed/{video_id}?start=0&autoplay=1';">
             {alphabet[label_index]}
         </div>
@@ -145,8 +154,9 @@ def main(youtube_url, timepoints, video_duration, stem_name='Test',
     for i in range(len(ticks_positions) - 1):
         left_position, current_seconds = ticks_positions[i]
         right_position, _ = ticks_positions[i + 1]
+        padding_adjustment = 6 if i == 0 else 4  # Add extra padding between 'A' and 'B'
         html_content += f"""
-        <div class="interval" style="left: {left_position}%; width: calc({right_position}% - {left_position}% - 4px);"
+        <div class="interval" style="left: {left_position}%; width: calc({right_position}% - {left_position}% - {padding_adjustment}px);"
              onclick="document.getElementById('youtubePlayer').src='https://www.youtube.com/embed/{video_id}?start={current_seconds}&autoplay=1';">
             {alphabet[label_index]}
         </div>
@@ -185,17 +195,12 @@ def main(youtube_url, timepoints, video_duration, stem_name='Test',
 
 # generate_html(youtube_url, timepoints, video_duration)
 
-
-
 ############
-
     return output_file
 
 
 
 if __name__ == "__main__":
-    import print_link
-
     # Example usage:
     youtube_url = "https://www.youtube.com/watch?v=5JXEPltfCes"  # Replace with your YouTube video URL
     timepoints = ["1:22", "2:21", "3:45"]  # Replace with your list of timepoints

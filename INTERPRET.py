@@ -1,5 +1,6 @@
 import gui.gui_browse_t as gui_browse
 import gui.gui_enterstring_t as gui_enterstring
+import gui.gui_button_t as gui_button
 import plot_time_series
 import analyze_json
 import scale_timecode
@@ -13,11 +14,14 @@ import pub_markdown
 import generate_html
 import print_link
 import reformat_timecodes
+import remove_element
 
 ##########
 verbose = True
 generate_markdown = True
 generate_html_code = True
+generate_sntcchi = True
+link_print = True
 ###########
 
 def create_and_save_dataframe(peaks_scaled, peaks_unscaled, peaks_timecode, peaks_m, peaks_s, output_file):
@@ -132,23 +136,32 @@ formatted_time_list = [format_time(x) for x in float_list]
 ######
 
 if generate_markdown:
-    youtube_url = gui_enterstring.main("This will generate dynamic links.", 
-                                       "URL", "Enter youtube URL", 
-            #  font=("Arial", 16), 
-            default_text="https://youtu.be/FXzPxJcDD-M", 
-            verbose=False)
+    youtube_url = gui_enterstring.main("This will generate dynamic links.", "URL", 
+                                       "Enter youtube URL", default_text="https://youtu.be/FXzPxJcDD-M", verbose=False)
 
-    # youtube_url = "https://youtu.be/FXzPxJcDD-M" 
-    # timecodes = ["3:04.23", "5:12.34", "7:45.67"]
     timecodes = formatted_time_list
     pub_markdown.main(youtube_url, timecodes, proj_name=stem_name, savefolder="OUTPUT/"+stem_name+"/")
 
 if generate_html_code:
-    # timepoints = ["1:22", "2:21", "3:45"]
-    # print(">>>>> timecodes:", timecodes)
-    timepoints = reformat_timecodes.main(timecodes)
-    # print(">>>>> timepoints:", timepoints)
-    timepoints = ["1:22", "2:21", "3:45"]
+
+    timepoints = reformat_timecodes.main(timecodes)     # timepoints = ["1:22", "2:21", "3:45"]
     output_file = generate_html.main(youtube_url, timepoints, x_range_seconds,
-                                     stem_name='Test')
+                                     stem_name=stem_name, htmltitle=stem_name,
+                                     containing_folder='OUTPUT/'+stem_name+"/")
+    # output_file = generate_html.main(youtube_url, timepoints, x_range_seconds,stem_name=stem_name)
+
+sntcchi_options = ['Generate a randomized test version, where one transition is removed', 'Do NOT generate test']
+generate_sntcchi = gui_button.main(sntcchi_options, default_option=1, dialog_text="Select an Option",
+         title="Choice", verbose=False)
+
+
+if generate_sntcchi == sntcchi_options[0]:
+    default_element_to_remove = gui_enterstring.main("Choose which element to remove (default = random)", 
+                                    "Transition point", "Enter an integer", default_text="", verbose=False)
+    modified_list = remove_element.main(timepoints, default=default_element_to_remove)
+    output_file = generate_html.main(youtube_url, modified_list, x_range_seconds, 
+                                     stem_name=stem_name, htmltitle='',
+                                     containing_folder='pub/test-')
+
+if link_print:
     print_link.main(output_file)
