@@ -10,9 +10,15 @@ import plot_timepoints
 import pyt.paths.parse_path as parse_path
 
 import pub_markdown
+import generate_html
+import print_link
+import reformat_timecodes
 
+##########
 verbose = True
 generate_markdown = True
+generate_html_code = True
+###########
 
 def create_and_save_dataframe(peaks_scaled, peaks_unscaled, peaks_timecode, peaks_m, peaks_s, output_file):
     # Create a dictionary with column names as keys and corresponding lists as values
@@ -136,3 +142,13 @@ if generate_markdown:
     # timecodes = ["3:04.23", "5:12.34", "7:45.67"]
     timecodes = formatted_time_list
     pub_markdown.main(youtube_url, timecodes, proj_name=stem_name, savefolder="OUTPUT/"+stem_name+"/")
+
+if generate_html_code:
+    # timepoints = ["1:22", "2:21", "3:45"]
+    # print(">>>>> timecodes:", timecodes)
+    timepoints = reformat_timecodes.main(timecodes)
+    # print(">>>>> timepoints:", timepoints)
+    timepoints = ["1:22", "2:21", "3:45"]
+    output_file = generate_html.main(youtube_url, timepoints, x_range_seconds,
+                                     stem_name='Test')
+    print_link.main(output_file)

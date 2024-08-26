@@ -61,3 +61,6 @@ INTER/*
 
 OUTPUT/*
 !OUTPUT/.gitkeep
+
+# ignore sandbox
+sandbox/
