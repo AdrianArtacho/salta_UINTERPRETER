@@ -7,3 +7,6 @@
 [submodule "pub"]
 	path = pub
 	url = https://AdrianArtacho@bitbucket.org/smoothspaces/pub_interpret.git
+[submodule "hypertext"]
+	path = hypertext
+	url = https://AdrianArtacho@bitbucket.org/smoothspaces/hypertext.git
