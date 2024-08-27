@@ -11,7 +11,7 @@ import plot_timepoints
 import pyt.paths.parse_path as parse_path
 
 import pub_markdown
-import generate_html
+import hypertext.generate_html as generate_html
 import print_link
 import reformat_timecodes
 import remove_element
