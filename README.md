@@ -49,8 +49,6 @@ Create a `venv`, install all dependencies...
 > > Sometimes 11500, sometimes 12500...
 > > 
 > > Check out the range of values in the sets I feed the APP
-> > 
-> > 
 > 
 > - Add a step in the process, where the values in the csv files are RESCALED to rebase the limit set in the online app and MAKE IT A READABLE PSEUDOTIMECODE AS WELL!
 
