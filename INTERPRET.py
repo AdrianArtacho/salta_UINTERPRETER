@@ -11,10 +11,11 @@ import plot_timepoints
 import pyt.paths.parse_path as parse_path
 
 import pub_markdown
-import hypertext.generate_html as generate_html
+import hypertext.generate_timeline as generate_timeline
 import hypertext.print_link as print_link
 import reformat_timecodes
 import remove_element
+import encode_timefloat
 
 ##########
 verbose = True
@@ -145,23 +146,40 @@ if generate_markdown:
 if generate_html_code:
 
     timepoints = reformat_timecodes.main(timecodes)     # timepoints = ["1:22", "2:21", "3:45"]
-    output_file = generate_html.main(youtube_url, timepoints, x_range_seconds,
-                                     stem_name=stem_name, htmltitle=stem_name,
-                                     containing_folder='OUTPUT/'+stem_name+"/")
+    # output_file = generate_timeline.generate_html(youtube_url, timepoints, x_range_seconds,
+    #                                  stem_name=stem_name, htmltitle=stem_name,
+    #                                  containing_folder='OUTPUT/'+stem_name+"/")
+    if verbose:
+        print("timepoints:", timepoints)
+        print("x_range_seconds:", x_range_seconds)
+    # exit()
+    
+    encoded_duration = encode_timefloat.main(x_range_seconds)
+    if verbose:
+        print("encoded_duration:", encoded_duration)
+    # exit()
+    output_file = generate_timeline.generate_html(timepoints, encoded_duration, youtube_url, htmltitle=stem_name,
+                                     stem_name=stem_name, containing_folder='OUTPUT/'+stem_name+"/") # These ones don't seem necessary
     # output_file = generate_html.main(youtube_url, timepoints, x_range_seconds,stem_name=stem_name)
 
 sntcchi_options = ['Generate a randomized test version, where one transition is removed', 'Do NOT generate test']
 generate_sntcchi = gui_button.main(sntcchi_options, default_option=1, dialog_text="Select an Option",
-         title="Choice", verbose=False)
+         title="Choice", verbose=True)
 
 
 if generate_sntcchi == sntcchi_options[0]:
     default_element_to_remove = gui_enterstring.main("Choose which element to remove (default = random)", 
                                     "Transition point", "Enter an integer", default_text="", verbose=False)
     modified_list = remove_element.main(timepoints, default=default_element_to_remove)
-    output_file = generate_html.main(youtube_url, modified_list, x_range_seconds, 
-                                     stem_name=stem_name, htmltitle='',
-                                     containing_folder='pub/test-')
+    # output_file = generate_timeline.generate_html(youtube_url, modified_list, x_range_seconds, 
+    #                                  stem_name=stem_name, htmltitle='',
+    #                                  containing_folder='pub/test-')
+
+    encoded_duration = encode_timefloat.main(x_range_seconds)
+    if verbose:
+        print("encoded_duration:", encoded_duration)
+    output_file = generate_timeline.generate_html(modified_list, encoded_duration, youtube_url, htmltitle='', 
+                                                  stem_name=stem_name, containing_folder='pub/test-') # these ones seem unused
 
 if link_print:
     print_link.main(output_file)
