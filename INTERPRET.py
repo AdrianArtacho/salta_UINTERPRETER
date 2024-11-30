@@ -57,7 +57,7 @@ def output_image_path(stem_name, output_folder="OUTPUT/"):
 
 
 # Select the .json file exported from the APP
-print('>>> Select the .json file exported from the APP')
+print('>>> Select the .json file exported from the UI')
 json_path = gui_browse.main(params_title='Select the .json file exported from the APP', 
          params_initbrowser='INPUT',
          params_extensions='.json',               # E.g. '.csv'
@@ -80,11 +80,12 @@ if verbose:
     print("x_range_seconds:", x_range_seconds)
 
 
-# exit()
+exit()
 peaks_scaled, result_file_path = plot_time_series.main(json_path)
 
+print("peaks_scaled:")
 print(peaks_scaled)
-exit()
+# exit()
 
 peaks_unscaled = []
 peaks_timecode = []

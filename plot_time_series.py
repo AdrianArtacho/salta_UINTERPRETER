@@ -39,12 +39,19 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
     general_kde = data['data']['General KDE']
     kde_sum = data['data']["KDE's sum"]
     kde_top = data['data']["KDE's top"]
+    peaks_literal = data['peaks']["KDE's sum"]
+    print("peaks_literal:")
+    print(peaks_literal)
+    # exit()
 
     # Smooth the KDE's sum using a Gaussian filter
     smoothed_kde_sum = ndimage.gaussian_filter(kde_sum, sigma=sigma)
 
     # Find peaks in the smoothed data
     peaks, _ = find_peaks(smoothed_kde_sum, height=0)  # Adjust height as necessary
+    print("smoothed_kde peaks:")
+    print(peaks)
+    # exit()
 
     # Create plots for each time series
     fig, axes = plt.subplots(3, 1, figsize=(10, 15))
@@ -59,7 +66,8 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
     # Plot for KDE's sum with peaks on smoothed data
     axes[1].plot(kde_sum, label="KDE's sum", color='green', alpha=0.5)  # Original data
     axes[1].plot(smoothed_kde_sum, linestyle='--', color='red', label="Smoothed KDE's sum")  # Smoothed data
-    axes[1].plot(peaks, smoothed_kde_sum[peaks], "x", label="Peaks")  # Mark peaks
+    # axes[1].plot(peaks, smoothed_kde_sum[peaks], "x", label="Peaks")  # Mark peaks
+    axes[1].plot(peaks_literal, smoothed_kde_sum[peaks], "x", label="Peaks")  # LITERAL PEAKS
     axes[1].set_title("KDE's sum with Peaks on Smoothed Data")
     axes[1].set_xlabel('Index')
     axes[1].set_ylabel('Value')
@@ -79,19 +87,19 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
 
     # Return the positions of the peaks
     if verbose:
-        print(peaks)
-        print(type(peaks))
+        print(peaks_literal)
+        print(type(peaks_literal))
 
     # Specify the file path to save to
     # result_file_path = folder_path+'/result.csv'
     result_file_path = save_filepath+'_result.csv'
 
     # Save the array to a CSV file using numpy.savetxt
-    np.savetxt(result_file_path, peaks, delimiter=',', fmt='%d')  # Use fmt='%d' for integers
+    np.savetxt(result_file_path, peaks_literal, delimiter=',', fmt='%d')  # Use fmt='%d' for integers
     if verbose:
         print("Array has been saved to", result_file_path)
     
-    return peaks, result_file_path
+    return peaks_literal, result_file_path
 
 # Example usage
 # file_path = 'path_to_your_file.json'  # Replace this with the path to your JSON file
