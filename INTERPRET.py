@@ -84,6 +84,7 @@ if verbose:
 peaks_scaled, result_file_path = plot_time_series.main(json_path)
 
 print(peaks_scaled)
+exit()
 
 peaks_unscaled = []
 peaks_timecode = []

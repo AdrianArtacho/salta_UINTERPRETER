@@ -4,7 +4,7 @@ import numpy as np
 import scipy.ndimage as ndimage
 from scipy.signal import find_peaks
 import os
-import csv
+# import csv
 import pyt.paths.parse_path as parse_path
 import pyt.paths.create_folder as create_folder
 
@@ -100,6 +100,6 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
 
 if __name__ == "__main__":
     # file_path = 'path_to_your_file.json'  # Replace this with the path to your JSON file
-    file_path='INPUT/exp5b_audios/data.json'
-    main(file_path)  # Specify your desired output filename here
+    file_path='INPUT/exp17/exp17_aggr_mpipe-cellist.json'
+    main(file_path, verbose=True)  # Specify your desired output filename here
 
