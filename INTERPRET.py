@@ -16,6 +16,7 @@ import hypertext.print_link as print_link
 import reformat_timecodes
 import remove_element
 import encode_timefloat
+import recent_url
 
 ##########
 verbose = True
@@ -80,9 +81,10 @@ if verbose:
     print("x_range_seconds:", x_range_seconds)
 
 
-exit()
+# recent_url.saveurl()
+# exit()
 peaks_scaled, result_file_path = plot_time_series.main(json_path)
-
+# exit()
 print("peaks_scaled:")
 print(peaks_scaled)
 # exit()
@@ -139,8 +141,9 @@ formatted_time_list = [format_time(x) for x in float_list]
 ######
 
 if generate_markdown:
-    youtube_url = gui_enterstring.main("This will generate dynamic links.", "URL", 
-                                       "Enter youtube URL", default_text="https://youtu.be/FXzPxJcDD-M", verbose=False)
+    last_used_url, last_url_description = recent_url.main()
+    youtube_url = gui_enterstring.main("This will generate dynamic links.", "URL("+last_url_description+")", 
+                                       "Enter youtube URL", default_text=last_used_url, verbose=False)
 
     timecodes = formatted_time_list
     pub_markdown.main(youtube_url, timecodes, proj_name=stem_name, savefolder="OUTPUT/"+stem_name+"/")

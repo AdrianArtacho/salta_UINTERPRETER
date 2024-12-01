@@ -39,18 +39,24 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
     general_kde = data['data']['General KDE']
     kde_sum = data['data']["KDE's sum"]
     kde_top = data['data']["KDE's top"]
-    peaks_literal = data['peaks']["KDE's sum"]
-    print("peaks_literal:")
-    print(peaks_literal)
+    peaks_literal = data['peaks']["KDE's sum"] # The actual peaks
+    print("peaks_literal_array:")
+    # print(peaks_literal)
+    peaks_literal_array = np.array(peaks_literal)
+    print(peaks_literal_array)
+    print(type(peaks_literal_array))
     # exit()
 
     # Smooth the KDE's sum using a Gaussian filter
     smoothed_kde_sum = ndimage.gaussian_filter(kde_sum, sigma=sigma)
 
     # Find peaks in the smoothed data
-    peaks, _ = find_peaks(smoothed_kde_sum, height=0)  # Adjust height as necessary
+    peaks_kde_sum, _ = find_peaks(smoothed_kde_sum, height=0)  # Adjust height as necessary
     print("smoothed_kde peaks:")
-    print(peaks)
+    print(peaks_kde_sum)
+    print(type(peaks_kde_sum))
+    
+    
     # exit()
 
     # Create plots for each time series
@@ -66,8 +72,8 @@ def main(file_path, sigma=2, output_path='OUTPUT/', verbose=False):
     # Plot for KDE's sum with peaks on smoothed data
     axes[1].plot(kde_sum, label="KDE's sum", color='green', alpha=0.5)  # Original data
     axes[1].plot(smoothed_kde_sum, linestyle='--', color='red', label="Smoothed KDE's sum")  # Smoothed data
-    # axes[1].plot(peaks, smoothed_kde_sum[peaks], "x", label="Peaks")  # Mark peaks
-    axes[1].plot(peaks_literal, smoothed_kde_sum[peaks], "x", label="Peaks")  # LITERAL PEAKS
+    # axes[1].plot(peaks_kde_sum, smoothed_kde_sum[peaks_kde_sum], "x", label="Peaks")  # Mark peaks
+    axes[1].plot(peaks_literal_array, smoothed_kde_sum[peaks_literal_array], "x", label="Peaks")  # LITERAL PEAKS
     axes[1].set_title("KDE's sum with Peaks on Smoothed Data")
     axes[1].set_xlabel('Index')
     axes[1].set_ylabel('Value')
