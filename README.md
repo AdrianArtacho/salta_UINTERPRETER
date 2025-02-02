@@ -12,7 +12,7 @@ This repo takes the output of the UI in github and extrats the peaks (after some
 
 2. Simply run the main script:
 
-```shell
+```bash
 python INTERPRET.py
 ```
 
